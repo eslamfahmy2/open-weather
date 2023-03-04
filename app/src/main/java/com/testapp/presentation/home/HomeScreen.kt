@@ -15,13 +15,17 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.testapp.R
 import com.testapp.domain.getFormattedTime
 import com.testapp.domain.getPrettyFormattedTime
@@ -207,24 +211,17 @@ fun WeatherHome(weather: Weather, modifier: Modifier, showTitle: Boolean = false
 
         Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen._8sdp)))
 
-        //todo
+        val painter = rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .placeholder(R.drawable.ic_sunny)
+                .data("https:${weather.icon}")
+                .build()
+        )
         Image(
             modifier = Modifier.size(dimensionResource(id = R.dimen._40sdp)),
-            painter = painterResource(id = R.drawable.ic_sunny),
+            painter = painter,
             contentDescription = "sun icon"
         )
-
-        /*  AsyncImage(
-              model = ImageRequest.Builder(LocalContext.current)
-                  .placeholder(R.drawable.ic_sunny)
-                  .data(weather.icon)
-                  .crossfade(true)
-                  .build(),
-              placeholder = painterResource(R.drawable.ic_sunny),
-              contentDescription = "icon",
-              contentScale = ContentScale.Crop,
-              modifier = Modifier.size(dimensionResource(id = R.dimen._50sdp))
-          )*/
 
         Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen._8sdp)))
 
@@ -235,7 +232,7 @@ fun WeatherHome(weather: Weather, modifier: Modifier, showTitle: Boolean = false
             withStyle(
                 style = SpanStyle(fontWeight = FontWeight.Thin)
             ) {
-                append("°F")
+                append(stringResource(id = R.string.f_degree))
             }
         }
 
@@ -276,7 +273,7 @@ fun WeatherHome(weather: Weather, modifier: Modifier, showTitle: Boolean = false
                 modifier = Modifier
                     .wrapContentWidth()
                     .padding(dimensionResource(id = R.dimen._4sdp)),
-                text = "${weather.wind_mph} mph",
+                text = "${weather.wind_mph} ${stringResource(id = R.string.mph)} ",
                 style = MaterialTheme.typography.caption,
                 color = MaterialTheme.colors.onPrimary
             )
@@ -291,7 +288,7 @@ fun WeatherHome(weather: Weather, modifier: Modifier, showTitle: Boolean = false
                 modifier = Modifier
                     .wrapContentWidth()
                     .padding(dimensionResource(id = R.dimen._4sdp)),
-                text = "${weather.humidity}%",
+                text = "${weather.humidity}${stringResource(id = R.string.percent)} ",
                 style = MaterialTheme.typography.caption,
                 color = MaterialTheme.colors.onPrimary
             )
@@ -316,11 +313,17 @@ fun ForecastDayItem(forecast: Forecast) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        val painter = rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .placeholder(R.drawable.ic_sunny)
+                .data("https:${forecast.icon}")
+                .build()
+        )
         Image(
-            painter = painterResource(id = R.drawable.ic_sunny),
+            painter = painter,
             contentDescription = "icon",
             modifier = Modifier
-                .size(dimensionResource(id = R.dimen._16sdp))
+                .size(dimensionResource(id = R.dimen._20sdp))
         )
 
         Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen._4sdp)))
@@ -328,7 +331,7 @@ fun ForecastDayItem(forecast: Forecast) {
         Text(
             modifier = Modifier
                 .wrapContentWidth(),
-            text = "${forecast.mintemp_f}°/${forecast.maxtemp_f}°F",
+            text = "${forecast.mintemp_f}°/${forecast.maxtemp_f}${stringResource(id = R.string.f_degree)}",
             style = MaterialTheme.typography.caption,
             color = MaterialTheme.colors.onPrimary
         )

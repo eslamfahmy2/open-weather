@@ -24,6 +24,24 @@ android {
             exclude "META-INF/LGPL2.1"
         }
     }
+    flavorDimensions "environment"
+    productFlavors {
+        dev {
+            dimension "environment"
+            buildConfigField "String", "baseUrl", "\"http://api.weatherapi.com/v1/\""
+            buildConfigField "String", "apiKey", "\"f00e24f03dc64ffeb1520012230303\""
+        }
+        stage {
+            dimension "environment"
+            buildConfigField "String", "baseUrl", "\"http://api.weatherapi.com/v1/\""
+            buildConfigField "String", "apiKey", "\"f00e24f03dc64ffeb1520012230303\""
+        }
+        prod {
+            dimension "environment"
+            buildConfigField "String", "baseUrl", "\"http://api.weatherapi.com/v1/\""
+            buildConfigField "String", "apiKey", "\"f00e24f03dc64ffeb1520012230303\""
+        }
+    }
 
     buildFeatures {
         viewBinding true

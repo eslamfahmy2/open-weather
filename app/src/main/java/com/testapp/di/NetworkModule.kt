@@ -1,5 +1,6 @@
 package com.testapp.di
 
+import com.testapp.BuildConfig
 import com.testapp.data.networking.AppServices
 import com.testapp.data.networking.interceptor.AuthInterceptor
 
@@ -24,7 +25,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://api.weatherapi.com/v1/")
+            .baseUrl(BuildConfig.baseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

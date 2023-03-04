@@ -186,20 +186,13 @@ fun SearchAppBar(
                         if (searchSuggestionOpenState.value == SearchSuggestionState.OPENED && text.isNotEmpty() && searchList.isNotEmpty()) {
 
                             searchList.forEach { searchText ->
-                                Text(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(start = dimensionResource(id = R.dimen._8sdp))
-                                        .padding(dimensionResource(id = R.dimen._8sdp))
-                                        .clickable {
-                                            onSearchClicked(searchText)
-                                            focusManager.clearFocus()
-                                            onCloseClicked()
-                                        },
-                                    text = searchText,
-                                    style = MaterialTheme.typography.body1,
-                                    color = MaterialTheme.colors.primary,
-                                    textAlign = TextAlign.Start
+                                SearchListItem(
+                                    searchText = searchText,
+                                    onClicked = {
+                                        onSearchClicked(searchText)
+                                        focusManager.clearFocus()
+                                        onCloseClicked()
+                                    }
                                 )
                             }
 
@@ -368,20 +361,13 @@ fun SearchAppBarTablet(
                                     )
                                 ) {
                                     searchList.forEach { searchText ->
-                                        Text(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(start = dimensionResource(id = R.dimen._8sdp))
-                                                .padding(dimensionResource(id = R.dimen._8sdp))
-                                                .clickable {
-                                                    onSearchClicked(searchText)
-                                                    focusManager.clearFocus()
-                                                    onCloseClicked()
-                                                },
-                                            text = searchText,
-                                            style = MaterialTheme.typography.body1,
-                                            color = MaterialTheme.colors.primary,
-                                            textAlign = TextAlign.Start
+                                        SearchListItem(
+                                            searchText = searchText,
+                                            onClicked = {
+                                                onSearchClicked(searchText)
+                                                focusManager.clearFocus()
+                                                onCloseClicked()
+                                            }
                                         )
                                     }
                                 }
@@ -405,4 +391,22 @@ fun SearchAppBarTablet(
             }
         }
     }
+}
+
+@Composable
+fun SearchListItem(searchText: String, onClicked: () -> Unit) {
+
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onClicked()
+            }
+            .padding(start = dimensionResource(id = R.dimen._8sdp))
+            .padding(dimensionResource(id = R.dimen._8sdp)),
+        text = searchText.replaceFirstChar { it.uppercase() },
+        style = MaterialTheme.typography.body1,
+        color = MaterialTheme.colors.primary,
+        textAlign = TextAlign.Start
+    )
 }

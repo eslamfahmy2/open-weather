@@ -7,4 +7,7 @@
     <string name="unknown_error">Unknown error</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
+    <string name="f_degree">°F</string>
+    <string name="percent">%</string>
+    <string name="mph">mph</string>
 </resources>
