@@ -28,3 +28,4 @@ package and is subdivided into packages according to view
 ".data" pancake contains implementation of data source "Retorfit" and date transfer objects
 
 ## Visuals
+https://raw.githubusercontent.com/eslamfahmy2/open-weather/main/phone.png
